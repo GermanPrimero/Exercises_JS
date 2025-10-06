@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Ej1_usuarios_manipulados</h1>
+    <script>
+        const usuarios = [
+            { id: 1, nombre: "Ana", apellido: "García", edad: 22 },
+            { id: 2, nombre: "Luis", apellido: "Pérez", edad: 17 },
+            { id: 3, nombre: "Marta", apellido: "López", edad: 30 },
+            { id: 4, nombre: "Germán", apellido: "Lara", edad: 30 },
+            { id: 5, nombre: "Fabrizio", apellido: "Villamarín", edad: 28 },
+        ];
+
+        usuariosMayoresDeEdad = usuarios.filter((usuario)=>{
+            if(usuario.edad >= 18) {
+                return true;
+            }
+        })
+
+        // console.log(usuariosMayoresDeEdad);
+
+        let nombres = [];
+
+        // usuariosMayoresDeEdad.forEach(usuario => {
+        //     nombres.push(usuario.nombre);
+        // });
+
+        const usuariosOrdenados = usuariosMayoresDeEdad.sort((a,b)=>a.nombre.localeCompare(b.nombre));
+
+        let usuariosConNombreCompleto = usuariosOrdenados.map(usuario => {
+            return {
+                id: usuario.id,
+                nombreCompleto: `${usuario.nombre} ${usuario.apellido}`
+            }
+        })
+
+        console.log(usuariosConNombreCompleto);
+        
+        
+
+        // let usuariosOrdenadosYMayoresDeEdad = nombresOrdenados.map((nombre) => {
+
+        //     let usuarioConNombreCompleto;
+        //     for (const usuario of usuariosMayoresDeEdad) {
+             
+        //         if(nombre == usuario.nombre) {
+        //           usuarioConNombreCompleto = {
+        //             id: usuario.id,
+        //             nombreCompleto: `${usuario.nombre} ${usuario.apellido}`
+        //           }  
+        //             break;
+        //         }
+        //     }
+
+        //     return usuarioConNombreCompleto;
+
+        // });
+
+        // console.log(usuariosOrdenadosYMayoresDeEdad);
+        
+
+        
+
+        // console.log(nombresOrdenados);
+        
+        
+
+        //Ordenar alfabeticamente me falta
+        // usuariosMayoresDeEdad.sort(function(a, b) {
+        //     console.log(a.nombre);
+        //     console.log(b.nombre);
+        //     return a.nombre.localCompare(b.nombre);
+        // })
+    
+    </script>
+</body>
+
+</html>
