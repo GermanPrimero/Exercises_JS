@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Personal Expenses Management</h1>
+    <script>
+        monthExpenses = [{ categoria: 'comida', monto: 120, fecha: '2025-10-06' },{categoria:'ropa', monto:60, fecha:'2025-10-02'},{categoria:'gasolina', monto:20, fecha:'2025-10-30'}, { categoria: 'comida', monto: 200, fecha: '2025-10-04' },{categoria:'ropa', monto:15, fecha:'2025-10-01'},{categoria:'gasolina', monto:5, fecha:'2025-10-07'}];
+
+        const [{categoria: categoria1, monto:monto1},{categoria: categoria2, monto:monto2},
+            {categoria: categoria3, monto:monto3}
+        ] = monthExpenses
+
+        // console.log([{categoria: categoria1, monto:monto1},{categoria: categoria2, monto:monto2},
+        //     {categoria: categoria3, monto:monto3}
+        // ]);
+
+        const totalMontoPerMonth = monthExpenses.reduce((acc,{monto})=>{
+
+            if(monto > 50) {
+                acc+=monto
+            }
+            return acc;
+            
+        },0);
+        
+        console.log(`💸 Total gastado: ${totalMontoPerMonth} €`);
+
+        const totalPerCategory = monthExpenses.reduce((acc,{categoria,monto})=>{
+//             switch(categoria){
+//                 case 'comida':
+//                     acc.comida += monto;
+//                     return acc;
+//                 case 'ropa':
+//                     acc.ropa += monto;
+//                     return acc;
+//                 case 'gasolina':
+//                     acc.gasolina += monto;
+//                     return acc;
+//             }
+
+//             if(categoria=="comida"){
+// acc.comida += monto;
+//                     return acc;
+//             }
+//             if(categoria=="ropa"){
+//                 acc.ropa += monto;
+//                     return acc;
+//             }
+//             if(categoria=="gasolina"){
+//                 acc.gasolina += monto;
+//                     return acc;
+//             }
+
+//Best operations for different accumulators
+            acc[categoria] = (acc[categoria] || 0) + monto;
+            return acc;
+            
+        // },{comida:0, ropa:0, gasolina:0})
+        },{})
+
+        console.log(`🧾 Por categoría: comida (${totalPerCategory.comida} €), ropa (${totalPerCategory.ropa} €), gasolina (${totalPerCategory.gasolina} €)`);
+        
+        otherExpenses = [...monthExpenses, { categoria: 'CAPRICHO', monto: 200, fecha: '2025-10-01' }]
+
+        console.log("Nueva Lista ");
+        otherExpenses.forEach(element => console.log(element));
+
+        function sumTotalExpenses(...expenses) {
+            return expenses.reduce((acc,{monto}) =>{
+                return acc = acc+monto;
+            },0)
+        }
+
+        console.log("Function sumTotalExpenses: "+ sumTotalExpenses({ categoria: 'comida', monto: 300, fecha: '2025-09-06' },{categoria:'ropa', monto:100, fecha:'2025-09-02'},{categoria:'gasolina', monto:50, fecha:'2025-09-30'}));
+        
+        
+        
+        
+    </script>
+</body>
+</html>
