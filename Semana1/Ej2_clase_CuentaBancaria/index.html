@@ -1,48 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
+    <h1>Exercise Cuenta Bancaria</h1>
     <script>
         class CuentaBancaria {
 
-            constructor(holdersName, balance=0) {
+            #balance = 0;
+            #transactionHistory = [];
+
+
+            constructor(holdersName, balance) {
                 this.holdersName = holdersName;
-                this.balance = balance;
+                this.#balance = balance;
             }
-            
+
             depositar(amount) {
-                (amount>0) ? this.balance += amount : window.alert("ERROR: amount is negative");
+
+                //MAL ya que si hay error se ejecuta el push() de la lista y no se debe ejecutar si hay error
+
+                // (amount>0) ? this.#balance += amount : window.alert("ERROR: amount is negative");
+                // this.#transactionHistory.push(`DEPOSITO - ${new Date().toLocaleString()} - AMOUNT: ${amount}€ - BALANCE: ${this.#balance}€`);
+                if (amount > 0) {
+                    this.#balance += amount
+                    this.#transactionHistory.push(`DEPOSITO - ${new Date().toLocaleString()} - AMOUNT: ${amount}€ - BALANCE: ${this.#balance}€`);
+                } else {
+                    window.alert("ERROR: amount is negative");
+                }
 
             }
 
             retirar(amount) {
-                (amount > this.balance) ? window.alert("ERROR: amount cant be bigger than balance"): this.balance = this.balance - amount;
+                // (amount > this.#balance) ? window.alert("ERROR: amount cant be bigger than balance"): this.#balance = this.#balance - amount;
+                // this.#transactionHistory.push(`RETIRO - ${new Date().toLocaleString()} - AMOUNT: ${amount}€ - BALANCE: ${this.#balance}€`);
+
+                if (amount > this.#balance) {
+                    window.alert("ERROR: amount cant be bigger than balance")
+                } else {
+                    this.#balance = this.#balance - amount;
+                    this.#transactionHistory.push(`RETIRO - ${new Date().toLocaleString()} - AMOUNT: ${amount}€ - BALANCE: ${this.#balance}€`);
+                }
             }
 
             saldoActual() {
-                return this.balance;
+                return this.#balance;
+            }
+
+            verHistorial() {
+                console.log("ACCOUNT: " + this.holdersName);
+                this.#transactionHistory.forEach(transaction => console.log(transaction))
             }
 
         }
 
-        const cuentaGerman = new CuentaBancaria("Germán", 100); 
+        const cuentaGerman = new CuentaBancaria("Germán", 100);
         const cuentaFabri = new CuentaBancaria("Fabri", 200);
 
         cuentaGerman.depositar(380.48);
         cuentaFabri.depositar(100.50)
-        console.log("Saldo de la cuenta de "+ cuentaGerman.holdersName + " y su saldo actual es " + cuentaGerman.saldoActual());
-        console.log("Saldo de la cuenta de "+ cuentaFabri.holdersName + " y su saldo actual es " + cuentaFabri.saldoActual());
+        console.log("Saldo de la cuenta de " + cuentaGerman.holdersName + " y su saldo actual es " + cuentaGerman.saldoActual());
+        console.log("Saldo de la cuenta de " + cuentaFabri.holdersName + " y su saldo actual es " + cuentaFabri.saldoActual());
 
         cuentaGerman.retirar(200)
         cuentaFabri.retirar(50)
-console.log("Saldo de la cuenta de "+ cuentaGerman.holdersName + " y su saldo actual es " + cuentaGerman.saldoActual());
-        console.log("Saldo de la cuenta de "+ cuentaFabri.holdersName + " y su saldo actual es " + cuentaFabri.saldoActual());  
-        
-        
+        console.log("Saldo de la cuenta de " + cuentaGerman.holdersName + " y su saldo actual es " + cuentaGerman.saldoActual());
+        console.log("Saldo de la cuenta de " + cuentaFabri.holdersName + " y su saldo actual es " + cuentaFabri.saldoActual());
+
+        //EXTRA LEVEL
+        cuentaGerman.balance = 1000
+        cuentaGerman.verHistorial();
+        cuentaFabri.verHistorial()
+
+
+
     </script>
 </body>
+
 </html>
