@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class CuentaBancaria {
+
+            constructor(holdersName, balance=0) {
+                this.holdersName = holdersName;
+                this.balance = balance;
+            }
+            
+            depositar(amount) {
+                (amount>0) ? this.balance += amount : window.alert("ERROR: amount is negative");
+
+            }
+
+            retirar(amount) {
+                (amount > this.balance) ? window.alert("ERROR: amount cant be bigger than balance"): this.balance = this.balance - amount;
+            }
+
+            saldoActual() {
+                return this.balance;
+            }
+
+        }
+
+        const cuentaGerman = new CuentaBancaria("Germán", 100); 
+        const cuentaFabri = new CuentaBancaria("Fabri", 200);
+
+        cuentaGerman.depositar(380.48);
+        cuentaFabri.depositar(100.50)
+        console.log("Saldo de la cuenta de "+ cuentaGerman.holdersName + " y su saldo actual es " + cuentaGerman.saldoActual());
+        console.log("Saldo de la cuenta de "+ cuentaFabri.holdersName + " y su saldo actual es " + cuentaFabri.saldoActual());
+
+        cuentaGerman.retirar(200)
+        cuentaFabri.retirar(50)
+console.log("Saldo de la cuenta de "+ cuentaGerman.holdersName + " y su saldo actual es " + cuentaGerman.saldoActual());
+        console.log("Saldo de la cuenta de "+ cuentaFabri.holdersName + " y su saldo actual es " + cuentaFabri.saldoActual());  
+        
+        
+    </script>
+</body>
+</html>
