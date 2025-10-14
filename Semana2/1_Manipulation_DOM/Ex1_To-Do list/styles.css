@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button, a {
+    cursor: pointers;
+}
+
+li {
+    /* border: ; */
+    margin-top: 20px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+li p, li button {
+    font-size: 1.3em;
+}
+
+.task-completed {
+text-decoration-line: line-through;
+}
+
+.btn-delete {
+    margin-top: 10px;
+    border: none;
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+}
