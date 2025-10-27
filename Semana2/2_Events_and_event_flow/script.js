@@ -90,7 +90,7 @@ delegateEventsInForm(form, events, function (event) {
     event.preventDefault();
     console.log("🚀 Envío del formulario:", datosUsuario);
 
-    if (datosUsuario["name"] && datosUsuario["email"]) {
+    if ((datosUsuario["name"] && datosUsuario["name"].length >= 3) && (datosUsuario["email"] && datosUsuario["email"].includes("@") && datosUsuario["email"].includes(".") )) {
       alert("You have registered the user CONGRATULATIONS");
     } else {
       paragraphFinalMessage.innerText =
