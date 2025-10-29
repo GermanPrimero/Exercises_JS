@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .closed {
+            display: none;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 10px;
+        }
+
+        #popup {
+            position: relative;
+            border-radius: 7px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            background-color: #f5f5f5;
+            border: none;
+        }
+
+        /* .opened-menu {
+            display: block;
+        } */
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Exercise 1 accessible user panel with modal and menu </h1>
+    </header>
+    <main>
+        <button tabindex="0" id="button_menu" aria-expanded="false" aria-haspopup="menu"
+            aria-controls="menu-options">☰</button>
+
+        <div id="menu-options" class="closed">
+            <!-- FEEDBACK: changed role for "menuitem" -->
+            <button aria-controls="popup" id="btn-popup" tabindex="0" role="menuitem" aria-haspopup="true">Open Modal</button>
+            <!-- FEEDBACK: changed role for "menuitem" -->
+            <button id="modeDarkButton" aria-pressed="false" tabindex="0" role="menuitem">Modo oscuro</button>
+        </div>
+
+        <!-- FEEDBACK: it's unnecessary attribute role="paragraph" -->
+        <p aria-live="assertive" aria-labelledby="modeDarkButton" id="messageOfModeDark"></p>
+
+        <dialog role="popup" id="popup" aria-modal="true" aria-labelledby="title-popup"
+            aria-describedby="paragraph-popup">
+            <h2 id="title-popup">Settings</h2>
+            <p id="paragraph-popup">Here you can change your personal settings.</p>
+            <label for="test-field">Test field:</label>
+
+            <!-- FEEDBACK: REMOVE role="input" because it's unnecessary -->
+            <input tabindex="0" aria-label="Test field:" id="test-field" type="text"
+                placeholder="test field">
+
+                <!-- FEEDBACK: REMOVE role="button" because it's unnecessary -->
+            <button tabindex="0">Accept</button>
+        </dialog>
+
+
+    </main>
+
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>

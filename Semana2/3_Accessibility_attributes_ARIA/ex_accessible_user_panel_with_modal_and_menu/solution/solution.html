@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de usuario accesible</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2rem;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #userMenu {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 3rem;
+            right: 2rem;
+            background: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        #userMenu[aria-hidden="false"] {
+            display: flex;
+        }
+
+        #userMenu button {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        #userMenu button:hover,
+        #userMenu button:focus {
+            background-color: #e0e0e0;
+        }
+
+        /* Modal */
+        #modal[aria-hidden="true"] {
+            display: none;
+        }
+
+        #modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 300px;
+            /*outline: none;*/
+        }
+
+        .dark {
+            background-color: #111;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 id="pageTitle">Panel de usuario</h1>
+        <button id="menuButton" aria-haspopup="true" aria-expanded="false" aria-controls="userMenu"
+            aria-label="Abrir menú de usuario">
+            ☰
+        </button>
+
+        <nav id="userMenu" role="menu" aria-labelledby="menuButton" aria-hidden="true">
+            <button role="menuitem" tabindex="-1" id="openModalBtn">Abrir modal</button>
+            <button role="menuitem" tabindex="-1" id="toggleMode" aria-pressed="false">Modo oscuro</button>
+        </nav>
+    </header>
+
+    <main aria-live="polite">
+        <p id="statusMessage">Bienvenido/a</p>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc"
+        aria-hidden="true">
+        <div class="modal-content" tabindex="0">
+            <h2 id="modalTitle">Configuración</h2>
+            <p id="modalDesc">Aquí puedes cambiar tus ajustes personales.</p>
+            <button id="closeModal">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        const menuBtn = document.getElementById("menuButton");
+        const menu = document.getElementById("userMenu");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const toggleModeBtn = document.getElementById("toggleMode");
+        const modal = document.getElementById("modal");
+        const closeModal = document.getElementById("closeModal");
+        const status = document.getElementById("statusMessage");
+
+        let darkMode = false;
+
+        // 🔹 Abrir / Cerrar menú desplegable
+        menuBtn.addEventListener("click", () => {
+            const expanded = menuBtn.getAttribute("aria-expanded") === "true";
+            menuBtn.setAttribute("aria-expanded", !expanded);
+            menu.setAttribute("aria-hidden", expanded);
+            if (!expanded) {
+                menu.querySelector("[role='menuitem']").focus();
+            } else {
+                menuBtn.focus();
+            }
+        });
+
+        // 🔹 Botón toggle con aria-pressed
+        toggleModeBtn.addEventListener("click", () => {
+            darkMode = !darkMode;
+            toggleModeBtn.setAttribute("aria-pressed", darkMode);
+            document.body.classList.toggle("dark", darkMode);
+            status.textContent = darkMode ? "🌙 Modo oscuro activado" : "☀️ Modo claro activado";
+        });
+
+        // 🔹 Abrir modal
+        openModalBtn.addEventListener("click", () => {
+            modal.removeAttribute("aria-hidden");
+            menu.setAttribute("aria-hidden", true);
+            modal.querySelector(".modal-content").focus();
+        });
+
+        // 🔹 Cerrar modal
+        closeModal.addEventListener("click", () => {
+            modal.setAttribute("aria-hidden", true);
+            menuBtn.focus();
+            menu.setAttribute("aria-hidden", true);
+            menuBtn.setAttribute("aria-expanded", false);
+        });
+
+        // 🔹 Accesibilidad con teclado
+        document.addEventListener("keydown", (e) => {
+            // Escape cierra el modal
+            if (e.key === "Escape" && modal.getAttribute("aria-hidden") == null) {
+                modal.setAttribute("aria-hidden", true);
+                menuBtn.focus();
+                menu.setAttribute("aria-hidden", true);
+                menuBtn.setAttribute("aria-expanded", false);
+            }
+
+            // Trap focus dentro del modal
+            if (e.key === "Tab" && modal.getAttribute("aria-hidden") == null) {
+                const focusable = modal.querySelectorAll("button, [tabindex='0']");
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
